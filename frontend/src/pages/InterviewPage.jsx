@@ -12,6 +12,7 @@ const InterviewPage = ({ user, token, API_BASE }) => {
   const [evaluation, setEvaluation] = useState(null);
   const [loadingEval, setLoadingEval] = useState(false);
   const [history, setHistory] = useState([]);
+  const [isExerciseMode, setIsExerciseMode] = useState(false);
   
   const recognitionRef = useRef(null);
 
@@ -21,6 +22,12 @@ const InterviewPage = ({ user, token, API_BASE }) => {
     "Describe a time you worked in a team and faced a major conflict. How did you resolve it?",
     "Why do you want to join our company and where do you see yourself in five years?",
     "Describe a challenging project you built. What were the outcomes and what did you learn?"
+  ];
+
+  const EXERCISE_PROMPTS = [
+    "Read this clearly: Peter Piper picked a peck of pickled peppers. How many pickled peppers did Peter Piper pick?",
+    "Read this paragraph aloud: The quick brown fox jumps over the lazy dog. It is an english pangram.",
+    "Speak about your favorite hobby for 1 minute continuously without using filler words."
   ];
 
   useEffect(() => {
@@ -72,12 +79,13 @@ const InterviewPage = ({ user, token, API_BASE }) => {
     }
   };
 
-  const startSession = () => {
+  const startSession = (exercise = false) => {
+    setIsExerciseMode(exercise);
     setSessionStarted(true);
     setQuestionIndex(0);
     setEvaluation(null);
     setAnswerText('');
-    speakQuestion(QUESTIONS[0]);
+    speakQuestion(exercise ? EXERCISE_PROMPTS[0] : QUESTIONS[0]);
   };
 
   const speakQuestion = (text) => {
@@ -111,12 +119,13 @@ const InterviewPage = ({ user, token, API_BASE }) => {
   };
 
   const handleNextQuestion = () => {
-    if (questionIndex < QUESTIONS.length - 1) {
+    const currentList = isExerciseMode ? EXERCISE_PROMPTS : QUESTIONS;
+    if (questionIndex < currentList.length - 1) {
       const nextIdx = questionIndex + 1;
       setQuestionIndex(nextIdx);
       setEvaluation(null);
       setAnswerText('');
-      speakQuestion(QUESTIONS[nextIdx]);
+      speakQuestion(currentList[nextIdx]);
     } else {
       // End session
       setSessionStarted(false);
@@ -133,6 +142,7 @@ const InterviewPage = ({ user, token, API_BASE }) => {
 
     setLoadingEval(true);
     try {
+      const currentList = isExerciseMode ? EXERCISE_PROMPTS : QUESTIONS;
       const res = await fetch(`${API_BASE}/interview/evaluate`, {
         method: 'POST',
         headers: {
@@ -140,10 +150,10 @@ const InterviewPage = ({ user, token, API_BASE }) => {
           'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
-          question: QUESTIONS[questionIndex],
+          question: currentList[questionIndex],
           answer: answerText,
           company: user.targetCompany,
-          role: 'SDE Intern'
+          role: isExerciseMode ? 'Speaking Exercise' : 'SDE Intern'
         })
       });
 
@@ -173,23 +183,44 @@ const InterviewPage = ({ user, token, API_BASE }) => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           
           {/* Landing Card */}
-          <div className="lg:col-span-2 glass-panel p-8 rounded-2xl flex flex-col items-center justify-center text-center space-y-5 min-h-[50vh]">
+          <div className="lg:col-span-1 glass-panel p-8 rounded-2xl flex flex-col items-center justify-center text-center space-y-5 min-h-[50vh]">
             <div className="w-16 h-16 rounded-full bg-blue-600/10 border border-blue-500/25 flex items-center justify-center">
               <MessageSquare className="w-8 h-8 text-neonBlue" />
             </div>
             
             <div className="space-y-2">
-              <h3 className="text-lg font-bold text-white">Start Behavioral Mock Round</h3>
-              <p className="text-xs text-slate-400 max-w-sm leading-relaxed">
-                Experience a 5-question structured HR interview. The AI will speak questions aloud, record your spoken responses, and grade confidence, grammar, speed, and filler words.
+              <h3 className="text-lg font-bold text-white">Start Behavioral Mock</h3>
+              <p className="text-xs text-slate-400 max-w-xs leading-relaxed">
+                Experience a 5-question structured HR interview. Record responses and get graded.
               </p>
             </div>
 
             <button
-              onClick={startSession}
+              onClick={() => startSession(false)}
               className="bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-6 py-3 rounded-lg transition-colors flex items-center gap-1.5 shadow-lg shadow-blue-500/10"
             >
-              <Play className="w-4 h-4" /> Launch AI Interviewer
+              <Play className="w-4 h-4" /> Launch Mock
+            </button>
+          </div>
+
+          {/* Daily Speaking Exercises Card */}
+          <div className="lg:col-span-1 glass-panel p-8 rounded-2xl flex flex-col items-center justify-center text-center space-y-5 min-h-[50vh]">
+            <div className="w-16 h-16 rounded-full bg-emerald-600/10 border border-emerald-500/25 flex items-center justify-center">
+              <Mic className="w-8 h-8 text-emerald-400" />
+            </div>
+            
+            <div className="space-y-2">
+              <h3 className="text-lg font-bold text-white">Daily Speaking Exercises</h3>
+              <p className="text-xs text-slate-400 max-w-xs leading-relaxed">
+                Practice short reading prompts and tongue twisters to improve speech cadence, pacing, and reduce filler words.
+              </p>
+            </div>
+
+            <button
+              onClick={() => startSession(true)}
+              className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-6 py-3 rounded-lg transition-colors flex items-center gap-1.5 shadow-lg shadow-emerald-500/10"
+            >
+              <Volume2 className="w-4 h-4" /> Start Practice
             </button>
           </div>
 
@@ -223,10 +254,10 @@ const InterviewPage = ({ user, token, API_BASE }) => {
             {/* Header / Question Index */}
             <div className="flex justify-between items-center border-b border-white/5 pb-3">
               <span className="text-xs font-black text-neonBlue uppercase tracking-wider">
-                Question {questionIndex + 1} of {QUESTIONS.length}
+                {isExerciseMode ? 'Speaking Prompt' : 'Question'} {questionIndex + 1} of {isExerciseMode ? EXERCISE_PROMPTS.length : QUESTIONS.length}
               </span>
               <button 
-                onClick={() => speakQuestion(QUESTIONS[questionIndex])}
+                onClick={() => speakQuestion(isExerciseMode ? EXERCISE_PROMPTS[questionIndex] : QUESTIONS[questionIndex])}
                 className="p-1.5 bg-slate-900 border border-white/5 hover:border-white/10 rounded text-slate-350 hover:text-white transition-colors"
                 title="Speak question again"
               >
@@ -237,7 +268,7 @@ const InterviewPage = ({ user, token, API_BASE }) => {
             {/* Question prompt block */}
             <div className="p-5 bg-slate-950/40 border border-white/5 rounded-xl text-center">
               <p className="text-sm font-semibold text-slate-100 leading-relaxed">
-                "{QUESTIONS[questionIndex]}"
+                "{isExerciseMode ? EXERCISE_PROMPTS[questionIndex] : QUESTIONS[questionIndex]}"
               </p>
             </div>
 

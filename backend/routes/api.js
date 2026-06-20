@@ -149,6 +149,43 @@ router.post('/auth/google', async (req, res) => {
   }
 });
 
+// Forgot Password - simulate sending email
+router.post('/auth/forgot-password', async (req, res) => {
+  const { email } = req.body;
+  try {
+    const user = await db.users.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: 'User with this email does not exist' });
+    }
+    // Simulate email sending success
+    res.json({ message: 'Password reset link sent to your email' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error processing forgot password request' });
+  }
+});
+
+// Reset Password - updates password
+router.post('/auth/reset-password', async (req, res) => {
+  const { email, newPassword } = req.body;
+  try {
+    const user = await db.users.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+    
+    await db.users.findByIdAndUpdate(user._id, { password: hashedPassword });
+    
+    res.json({ message: 'Password updated successfully. You can now login.' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error resetting password' });
+  }
+});
+
 // Get User Profile
 router.get('/auth/profile', protect, async (req, res) => {
   try {

@@ -4,7 +4,10 @@
 
 @layer base {
   body {
-    @apply bg-darkBg text-slate-100 font-sans antialiased selection:bg-neonBlue/30 selection:text-neonBlue overflow-x-hidden;
+    @apply bg-slate-50 text-slate-900 font-sans antialiased selection:bg-neonBlue/30 selection:text-neonBlue overflow-x-hidden transition-colors duration-300;
+  }
+  .dark body {
+    @apply bg-darkBg text-slate-100;
   }
 }
 
@@ -15,24 +18,43 @@
 }
 
 ::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+html.dark ::-webkit-scrollbar-track {
   background: #0b0f19;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
+  background: #cbd5e1;
   border-radius: 4px;
 }
 
+html.dark ::-webkit-scrollbar-thumb {
+  background: #1e293b;
+}
+
 ::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
   background: #3b82f6;
 }
 
 /* Glassmorphism Classes */
 .glass-panel {
-  background: rgba(22, 31, 48, 0.7);
+  background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.dark .glass-panel {
+  background: rgba(22, 31, 48, 0.7);
   border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: none;
 }
 
 .glass-panel-hover:hover {

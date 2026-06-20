@@ -1,5 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { AuthContext } from './context/AuthContext';
+import { motion, AnimatePresence } from 'framer-motion';
 import AuthPage from './pages/AuthPage';
 import DashboardPage from './pages/DashboardPage';
 import AtsAnalyzerPage from './pages/AtsAnalyzerPage';
@@ -15,13 +16,39 @@ import AdminPage from './pages/AdminPage';
 
 import { 
   LayoutDashboard, FileText, Briefcase, Calendar, MessageSquare, 
-  TrendingUp, Github, Brain, Kanban, Share2, Shield, LogOut, Flame, Menu, X
+  TrendingUp, Github, Brain, Kanban, Share2, Shield, LogOut, Flame, Menu, X, Moon, Sun
 } from 'lucide-react';
 
 const App = () => {
   const { user, token, loading, logout, updateProfile, API_BASE } = useContext(AuthContext);
   const [tab, setTab] = useState('dashboard');
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [isDarkMode, setIsDarkMode] = useState(true);
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    if (savedTheme === 'light') {
+      setIsDarkMode(false);
+      document.documentElement.classList.remove('dark');
+    } else {
+      setIsDarkMode(true);
+      document.documentElement.classList.add('dark');
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    setIsDarkMode(prev => {
+      const newVal = !prev;
+      if (newVal) {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      }
+      return newVal;
+    });
+  };
 
   if (loading) {
     return (
@@ -84,7 +111,7 @@ const App = () => {
   };
 
   return (
-    <div className="min-h-screen bg-darkBg flex relative">
+    <div className="h-screen overflow-hidden bg-slate-50 dark:bg-darkBg flex relative transition-colors duration-300">
       
       {/* Dynamic Glowing Accents */}
       <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[100px] pointer-events-none"></div>
@@ -181,8 +208,15 @@ const App = () => {
             </h1>
           </div>
 
-          {/* Quick Widgets: Streak count */}
+          {/* Quick Widgets: Streak count and Theme Toggle */}
           <div className="flex items-center gap-4">
+            <button 
+              onClick={toggleTheme}
+              className="p-2 rounded-full bg-slate-200 dark:bg-slate-900 text-slate-600 dark:text-slate-300 border border-slate-300 dark:border-white/10 hover:shadow-md transition-all"
+              title="Toggle Theme"
+            >
+              {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </button>
             <div className="flex items-center gap-1.5 px-3 py-1.5 bg-orange-500/10 border border-orange-500/25 rounded-lg text-orange-500 text-xs font-extrabold shadow-sm">
               <Flame className="w-4 h-4 fill-orange-500/10 animate-pulse" />
               <span>{user.streak || 1} Days Active</span>
@@ -191,8 +225,18 @@ const App = () => {
         </header>
 
         {/* Scrollable View Panel */}
-        <main className="flex-1 overflow-y-auto p-6 md:p-8">
-          {renderActiveTab()}
+        <main className="flex-1 overflow-y-auto p-6 md:p-8 relative">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={tab}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+            >
+              {renderActiveTab()}
+            </motion.div>
+          </AnimatePresence>
         </main>
       </div>
 

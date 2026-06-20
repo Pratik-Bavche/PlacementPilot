@@ -3,9 +3,11 @@ import { AuthContext } from '../context/AuthContext';
 import { Shield, Sparkles, LogIn, UserPlus } from 'lucide-react';
 
 const AuthPage = () => {
-  const { login, register, loginGoogle } = useContext(AuthContext);
+  const { login, register, loginGoogle, API_BASE } = useContext(AuthContext);
   
   const [isLogin, setIsLogin] = useState(true);
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
+  const [resetStep, setResetStep] = useState(1);
   const [role, setRole] = useState('student'); // 'student' or 'admin'
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -17,6 +19,55 @@ const AuthPage = () => {
     e.preventDefault();
     setError('');
     setLoading(true);
+
+    if (isForgotPassword) {
+      if (resetStep === 1) {
+        if (!email) { setError('Please enter your email'); setLoading(false); return; }
+        try {
+          const res = await fetch(`${API_BASE}/auth/forgot-password`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+          });
+          const data = await res.json();
+          if (res.ok) {
+            setResetStep(2);
+            setError(''); 
+          } else {
+            setError(data.message || 'Error processing request');
+          }
+        } catch (err) {
+          setError('Failed to connect to server');
+        } finally {
+          setLoading(false);
+        }
+        return;
+      } else {
+        if (!password) { setError('Please enter a new password'); setLoading(false); return; }
+        try {
+          const res = await fetch(`${API_BASE}/auth/reset-password`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, newPassword: password })
+          });
+          const data = await res.json();
+          if (res.ok) {
+            setIsForgotPassword(false);
+            setResetStep(1);
+            setIsLogin(true);
+            setPassword('');
+            alert(data.message);
+          } else {
+            setError(data.message || 'Error resetting password');
+          }
+        } catch (err) {
+          setError('Failed to connect to server');
+        } finally {
+          setLoading(false);
+        }
+        return;
+      }
+    }
 
     if (!email || !password || (!isLogin && !name)) {
       setError('Please fill in all fields');
@@ -104,7 +155,7 @@ const AuthPage = () => {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {!isLogin && (
+          {!isLogin && !isForgotPassword && (
             <div>
               <label className="block text-xs font-medium text-slate-400 mb-1">Full Name</label>
               <input
@@ -113,34 +164,51 @@ const AuthPage = () => {
                 placeholder="Pratik Patil"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                required={!isLogin && !isForgotPassword}
+              />
+            </div>
+          )}
+
+          {(!isForgotPassword || resetStep === 1) && (
+            <div>
+              <label className="block text-xs font-medium text-slate-400 mb-1">Email Address</label>
+              <input
+                type="email"
+                className="w-full bg-slate-950/60 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-neonBlue transition-colors"
+                placeholder={role === 'admin' ? 'admin@placementpilot.ai' : 'student@college.edu'}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
           )}
 
-          <div>
-            <label className="block text-xs font-medium text-slate-400 mb-1">Email Address</label>
-            <input
-              type="email"
-              className="w-full bg-slate-950/60 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-neonBlue transition-colors"
-              placeholder={role === 'admin' ? 'admin@placementpilot.ai' : 'student@college.edu'}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-xs font-medium text-slate-400 mb-1">Password</label>
-            <input
-              type="password"
-              className="w-full bg-slate-950/60 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-neonBlue transition-colors"
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
+          {(!isForgotPassword || resetStep === 2) && (
+            <div>
+              <div className="flex justify-between items-center mb-1">
+                <label className="block text-xs font-medium text-slate-400">
+                  {isForgotPassword ? 'New Password' : 'Password'}
+                </label>
+                {isLogin && !isForgotPassword && (
+                  <button 
+                    type="button" 
+                    onClick={() => { setIsForgotPassword(true); setError(''); setResetStep(1); }}
+                    className="text-[10px] text-neonBlue hover:text-white transition-colors"
+                  >
+                    Forgot Password?
+                  </button>
+                )}
+              </div>
+              <input
+                type="password"
+                className="w-full bg-slate-950/60 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-neonBlue transition-colors"
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+          )}
 
           <button
             type="submit"
@@ -153,6 +221,11 @@ const AuthPage = () => {
           >
             {loading ? (
               <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+            ) : isForgotPassword ? (
+              <>
+                <Shield className="w-4 h-4" />
+                {resetStep === 1 ? 'Send Reset Link' : 'Update Password'}
+              </>
             ) : isLogin ? (
               <>
                 <LogIn className="w-4 h-4" />
@@ -190,17 +263,31 @@ const AuthPage = () => {
           Google Authentication
         </button>
 
-        {/* Toggle Login/Signup */}
-        <div className="mt-8 text-center">
-          <button
-            onClick={() => {
-              setIsLogin(!isLogin);
-              setError('');
-            }}
-            className="text-xs text-slate-400 hover:text-neonBlue transition-colors font-medium"
-          >
-            {isLogin ? "Don't have an account? Sign Up" : "Already have an account? Sign In"}
-          </button>
+        {/* Toggle Login/Signup/Forgot */}
+        <div className="mt-8 text-center flex flex-col gap-2">
+          {isForgotPassword && (
+            <button
+              onClick={() => {
+                setIsForgotPassword(false);
+                setError('');
+              }}
+              className="text-xs text-slate-400 hover:text-white transition-colors font-medium"
+            >
+              Back to Sign In
+            </button>
+          )}
+          
+          {!isForgotPassword && (
+            <button
+              onClick={() => {
+                setIsLogin(!isLogin);
+                setError('');
+              }}
+              className="text-xs text-slate-400 hover:text-neonBlue transition-colors font-medium"
+            >
+              {isLogin ? "Don't have an account? Sign Up" : "Already have an account? Sign In"}
+            </button>
+          )}
         </div>
 
         {role === 'admin' && isLogin && (
