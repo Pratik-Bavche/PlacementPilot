@@ -36,17 +36,27 @@ const App = () => {
   }, []);
 
   const toggleTheme = () => {
-    setIsDarkMode(prev => {
-      const newVal = !prev;
-      if (newVal) {
-        document.documentElement.classList.add('dark');
-        localStorage.setItem('theme', 'dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-        localStorage.setItem('theme', 'light');
-      }
-      return newVal;
-    });
+    const switchTheme = () => {
+      setIsDarkMode(prev => {
+        const newVal = !prev;
+        if (newVal) {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        }
+        return newVal;
+      });
+    };
+
+    if (!document.startViewTransition) {
+      switchTheme();
+    } else {
+      document.startViewTransition(() => {
+        switchTheme();
+      });
+    }
   };
 
   if (loading) {
@@ -103,8 +113,8 @@ const App = () => {
   };
 
   return (
-    <div className="h-screen overflow-hidden bg-slate-50 dark:bg-darkBg flex relative transition-colors duration-300">
-      
+    <div className="h-screen overflow-hidden bg-slate-50 dark:bg-darkBg flex relative transition-colors duration-500">
+
       {/* Dynamic Glowing Accents */}
       <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[100px] pointer-events-none"></div>
       <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-purple-500/5 rounded-full blur-[100px] pointer-events-none"></div>
@@ -204,20 +214,10 @@ const App = () => {
           <div className="flex items-center gap-4">
             <button 
               onClick={toggleTheme}
-              className="p-2 rounded-full bg-slate-200 dark:bg-slate-900 text-slate-600 dark:text-slate-300 border border-slate-300 dark:border-white/10 hover:shadow-md transition-all w-9 h-9 flex items-center justify-center overflow-hidden"
+              className="p-2 rounded-full bg-slate-200 dark:bg-slate-900 text-slate-600 dark:text-slate-300 border border-slate-300 dark:border-white/10 hover:shadow-md transition-all flex items-center justify-center overflow-hidden"
               title="Toggle Theme"
             >
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={isDarkMode ? 'dark' : 'light'}
-                  initial={{ y: -20, opacity: 0, rotate: -90 }}
-                  animate={{ y: 0, opacity: 1, rotate: 0 }}
-                  exit={{ y: 20, opacity: 0, rotate: 90 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-                </motion.div>
-              </AnimatePresence>
+              {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </button>
             <div className="flex items-center gap-1.5 px-3 py-1.5 bg-orange-500/10 border border-orange-500/25 rounded-lg text-orange-500 text-xs font-extrabold shadow-sm">
               <Flame className="w-4 h-4 fill-orange-500/10 animate-pulse" />
