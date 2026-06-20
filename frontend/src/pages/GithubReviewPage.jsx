@@ -43,8 +43,8 @@ const GithubReviewPage = ({ token, API_BASE }) => {
       
       {/* Header */}
       <div>
-        <h2 className="text-xl font-bold text-white">GitHub Project Reviewer</h2>
-        <p className="text-xs text-slate-400">Scan repository structure, README files, documentation completeness, and code modularity ratings</p>
+        <h2 className="text-xl font-bold text-slate-900 dark:text-white">GitHub Project Reviewer</h2>
+        <p className="text-xs text-slate-600 dark:text-slate-400">Scan repository structure, README files, documentation completeness, and code modularity ratings</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
@@ -52,20 +52,20 @@ const GithubReviewPage = ({ token, API_BASE }) => {
         {/* Input Form */}
         <div className="lg:col-span-2 space-y-4">
           <div className="glass-panel p-6 rounded-2xl space-y-4">
-            <div className="flex items-center gap-2 border-b border-white/5 pb-2">
-              <Github className="w-5 h-5 text-slate-300" />
-              <h3 className="text-sm font-semibold text-white">Select Project Repo</h3>
+            <div className="flex items-center gap-2 border-b border-slate-200 dark:border-white/5 pb-2">
+              <Github className="w-5 h-5 text-slate-700 dark:text-slate-300" />
+              <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Select Project Repo</h3>
             </div>
 
             <form onSubmit={handleReview} className="space-y-4">
               <div>
-                <label className="block text-xs text-slate-400 mb-1">GitHub Repository Link</label>
+                <label className="block text-xs text-slate-600 dark:text-slate-400 mb-1">GitHub Repository Link</label>
                 <input
                   type="text"
                   placeholder="https://github.com/username/project"
                   value={repoUrl}
                   onChange={(e) => setRepoUrl(e.target.value)}
-                  className="w-full bg-slate-950/60 border border-white/10 rounded-lg px-3 py-2.5 text-xs text-white focus:outline-none focus:border-neonBlue transition-colors"
+                  className="w-full bg-slate-200/50 dark:bg-slate-950/60 border border-slate-300 dark:border-white/10 rounded-lg px-3 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-neonBlue transition-colors"
                 />
               </div>
 
@@ -98,15 +98,15 @@ const GithubReviewPage = ({ token, API_BASE }) => {
             <div className="glass-panel p-6 rounded-2xl space-y-6">
               
               {/* Score breakdown */}
-              <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/5 pb-4">
+              <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 dark:border-white/5 pb-4">
                 <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 rounded-xl bg-slate-900 border border-white/5 flex flex-col items-center justify-center">
+                  <div className="w-16 h-16 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/5 flex flex-col items-center justify-center">
                     <span className="text-2xl font-black text-neonBlue">{review.overallScore}</span>
                     <span className="text-[8px] text-slate-500 uppercase tracking-widest font-bold">Total</span>
                   </div>
                   <div>
-                    <h3 className="text-base font-bold text-white">Repository Health Assessment</h3>
-                    <p className="text-[11px] text-slate-400">
+                    <h3 className="text-base font-bold text-slate-900 dark:text-white">Repository Health Assessment</h3>
+                    <p className="text-[11px] text-slate-600 dark:text-slate-400">
                       {review.overallScore >= 80 ? 'Highly robust and well-documented repository.' : review.overallScore >= 65 ? 'Good quality, requires better modular design.' : 'Critically lacks structure or README explanation.'}
                     </p>
                   </div>
@@ -122,9 +122,9 @@ const GithubReviewPage = ({ token, API_BASE }) => {
                   { title: 'Scalability', score: review.scalability },
                   { title: 'Resume Impact', score: review.resumeImpact }
                 ].map((item, idx) => (
-                  <div key={idx} className="bg-slate-900/40 border border-white/5 rounded-lg p-2.5 text-center space-y-1">
+                  <div key={idx} className="bg-slate-100/80 dark:bg-slate-900/40 border border-slate-200 dark:border-white/5 rounded-lg p-2.5 text-center space-y-1">
                     <span className="text-[9px] text-slate-500 font-semibold uppercase tracking-wider block truncate">{item.title}</span>
-                    <p className="text-sm font-extrabold text-white">{item.score}/10</p>
+                    <p className="text-sm font-extrabold text-slate-900 dark:text-white">{item.score}/10</p>
                   </div>
                 ))}
               </div>
@@ -134,7 +134,7 @@ const GithubReviewPage = ({ token, API_BASE }) => {
                 <h4 className="text-xs font-bold text-slate-350">Improvement Checklist</h4>
                 <ul className="space-y-2.5">
                   {review.suggestions && review.suggestions.map((sug, idx) => (
-                    <li key={idx} className="flex gap-2.5 text-xs text-slate-400 leading-relaxed">
+                    <li key={idx} className="flex gap-2.5 text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                       <AlertTriangle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
                       <span>{sug}</span>
                     </li>
@@ -144,9 +144,9 @@ const GithubReviewPage = ({ token, API_BASE }) => {
 
             </div>
           ) : (
-            <div className="glass-panel p-8 rounded-2xl text-center flex flex-col items-center justify-center min-h-[40vh] border border-dashed border-white/10 text-slate-505 space-y-2">
+            <div className="glass-panel p-8 rounded-2xl text-center flex flex-col items-center justify-center min-h-[40vh] border border-dashed border-slate-300 dark:border-white/10 text-slate-505 space-y-2">
               <Github className="w-12 h-12 text-slate-650" />
-              <h3 className="text-sm font-semibold text-slate-400">No active scan loaded</h3>
+              <h3 className="text-sm font-semibold text-slate-600 dark:text-slate-400">No active scan loaded</h3>
               <p className="text-xs text-slate-500 max-w-xs">
                 Provide your public GitHub repository URL link and run the AI analyzer to inspect files.
               </p>

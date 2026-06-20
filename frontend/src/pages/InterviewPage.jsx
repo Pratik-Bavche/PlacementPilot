@@ -175,8 +175,8 @@ const InterviewPage = ({ user, token, API_BASE }) => {
       
       {/* Header */}
       <div>
-        <h2 className="text-xl font-bold text-white">AI HR Interview Simulator</h2>
-        <p className="text-xs text-slate-400">Practice behavioral rounds with real-time vocal feedback, speech cadence analytics, and grammar ratings</p>
+        <h2 className="text-xl font-bold text-slate-900 dark:text-white">AI HR Interview Simulator</h2>
+        <p className="text-xs text-slate-600 dark:text-slate-400">Practice behavioral rounds with real-time vocal feedback, speech cadence analytics, and grammar ratings</p>
       </div>
 
       {!sessionStarted ? (
@@ -189,8 +189,8 @@ const InterviewPage = ({ user, token, API_BASE }) => {
             </div>
             
             <div className="space-y-2">
-              <h3 className="text-lg font-bold text-white">Start Behavioral Mock</h3>
-              <p className="text-xs text-slate-400 max-w-xs leading-relaxed">
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white">Start Behavioral Mock</h3>
+              <p className="text-xs text-slate-600 dark:text-slate-400 max-w-xs leading-relaxed">
                 Experience a 5-question structured HR interview. Record responses and get graded.
               </p>
             </div>
@@ -210,8 +210,8 @@ const InterviewPage = ({ user, token, API_BASE }) => {
             </div>
             
             <div className="space-y-2">
-              <h3 className="text-lg font-bold text-white">Daily Speaking Exercises</h3>
-              <p className="text-xs text-slate-400 max-w-xs leading-relaxed">
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white">Daily Speaking Exercises</h3>
+              <p className="text-xs text-slate-600 dark:text-slate-400 max-w-xs leading-relaxed">
                 Practice short reading prompts and tongue twisters to improve speech cadence, pacing, and reduce filler words.
               </p>
             </div>
@@ -226,13 +226,13 @@ const InterviewPage = ({ user, token, API_BASE }) => {
 
           {/* Historical Attempts */}
           <div className="glass-panel p-6 rounded-2xl space-y-4">
-            <h4 className="text-sm font-semibold text-white border-b border-white/5 pb-2">Recent Sessions History</h4>
+            <h4 className="text-sm font-semibold text-slate-900 dark:text-white border-b border-slate-200 dark:border-white/5 pb-2">Recent Sessions History</h4>
             <div className="space-y-3 max-h-[40vh] overflow-y-auto pr-1">
               {history && history.length > 0 ? (
                 history.map((h, idx) => (
-                  <div key={idx} className="p-3 bg-slate-900/40 rounded-lg border border-white/5 flex justify-between items-center text-xs">
+                  <div key={idx} className="p-3 bg-slate-100/80 dark:bg-slate-900/40 rounded-lg border border-slate-200 dark:border-white/5 flex justify-between items-center text-xs">
                     <div>
-                      <span className="font-bold text-slate-200">{h.company || 'General HR'}</span>
+                      <span className="font-bold text-slate-800 dark:text-slate-200">{h.company || 'General HR'}</span>
                       <p className="text-[10px] text-slate-500 mt-0.5">{new Date(h.createdAt).toLocaleDateString()}</p>
                     </div>
                     <span className="text-neonBlue font-extrabold">{h.overallScore || 70}%</span>
@@ -252,13 +252,13 @@ const InterviewPage = ({ user, token, API_BASE }) => {
           <div className="lg:col-span-3 glass-panel p-6 rounded-2xl space-y-6 relative">
             
             {/* Header / Question Index */}
-            <div className="flex justify-between items-center border-b border-white/5 pb-3">
+            <div className="flex justify-between items-center border-b border-slate-200 dark:border-white/5 pb-3">
               <span className="text-xs font-black text-neonBlue uppercase tracking-wider">
                 {isExerciseMode ? 'Speaking Prompt' : 'Question'} {questionIndex + 1} of {isExerciseMode ? EXERCISE_PROMPTS.length : QUESTIONS.length}
               </span>
               <button 
                 onClick={() => speakQuestion(isExerciseMode ? EXERCISE_PROMPTS[questionIndex] : QUESTIONS[questionIndex])}
-                className="p-1.5 bg-slate-900 border border-white/5 hover:border-white/10 rounded text-slate-350 hover:text-white transition-colors"
+                className="p-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/5 hover:border-slate-300 dark:border-white/10 rounded text-slate-350 hover:text-slate-900 dark:text-white transition-colors"
                 title="Speak question again"
               >
                 <Volume2 className="w-4 h-4" />
@@ -266,7 +266,7 @@ const InterviewPage = ({ user, token, API_BASE }) => {
             </div>
 
             {/* Question prompt block */}
-            <div className="p-5 bg-slate-950/40 border border-white/5 rounded-xl text-center">
+            <div className="p-5 bg-slate-200/50 dark:bg-slate-950/40 border border-slate-200 dark:border-white/5 rounded-xl text-center">
               <p className="text-sm font-semibold text-slate-100 leading-relaxed">
                 "{isExerciseMode ? EXERCISE_PROMPTS[questionIndex] : QUESTIONS[questionIndex]}"
               </p>
@@ -282,7 +282,7 @@ const InterviewPage = ({ user, token, API_BASE }) => {
                     : 'bg-blue-600 hover:bg-blue-500 shadow-lg shadow-blue-500/20'
                 }`}
               >
-                {isRecording ? <MicOff className="w-6 h-6 text-white" /> : <Mic className="w-6 h-6 text-white" />}
+                {isRecording ? <MicOff className="w-6 h-6 text-slate-900 dark:text-white" /> : <Mic className="w-6 h-6 text-slate-900 dark:text-white" />}
                 
                 {/* Radar glow loop */}
                 {isRecording && (
@@ -313,24 +313,24 @@ const InterviewPage = ({ user, token, API_BASE }) => {
 
             {/* Answer Display / Edit Area */}
             <div className="space-y-2">
-              <label className="block text-xs font-semibold text-slate-400">Response Text</label>
+              <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400">Response Text</label>
               <textarea
                 value={answerText}
                 onChange={(e) => setAnswerText(e.target.value)}
-                className="w-full h-32 bg-slate-950/60 border border-white/10 rounded-lg px-3 py-2 text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:border-neonBlue transition-colors resize-none"
+                className="w-full h-32 bg-slate-200/50 dark:bg-slate-950/60 border border-slate-300 dark:border-white/10 rounded-lg px-3 py-2 text-xs text-slate-800 dark:text-slate-200 placeholder-slate-600 focus:outline-none focus:border-neonBlue transition-colors resize-none"
                 placeholder="Your spoken words will appear here. Feel free to edit or type directly..."
               />
             </div>
 
             {/* Navigation buttons */}
-            <div className="flex justify-between items-center border-t border-white/5 pt-4">
+            <div className="flex justify-between items-center border-t border-slate-200 dark:border-white/5 pt-4">
               <button
                 onClick={() => {
                   window.speechSynthesis.cancel();
                   setSessionStarted(false);
                   fetchHistory();
                 }}
-                className="text-xs font-semibold text-slate-400 hover:text-white transition-colors"
+                className="text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
               >
                 Quit Session
               </button>
@@ -353,7 +353,7 @@ const InterviewPage = ({ user, token, API_BASE }) => {
                 {evaluation && (
                   <button
                     onClick={handleNextQuestion}
-                    className="bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs px-4 py-2 rounded-lg transition-colors"
+                    className="bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs px-4 py-2 rounded-lg transition-colors"
                   >
                     {questionIndex < QUESTIONS.length - 1 ? "Next Question" : "Complete Interview"}
                   </button>
@@ -367,26 +367,26 @@ const InterviewPage = ({ user, token, API_BASE }) => {
           <div className="lg:col-span-2">
             {evaluation ? (
               <div className="glass-panel p-6 rounded-2xl space-y-5">
-                <h3 className="text-sm font-bold text-white border-b border-white/5 pb-2">Vocal Communication Metrics</h3>
+                <h3 className="text-sm font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-white/5 pb-2">Vocal Communication Metrics</h3>
 
                 {/* Score meters grid */}
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-slate-950/30 border border-white/5 p-3 rounded-lg text-center space-y-1">
+                  <div className="bg-slate-200/50 dark:bg-slate-950/30 border border-slate-200 dark:border-white/5 p-3 rounded-lg text-center space-y-1">
                     <span className="text-[10px] text-slate-500 uppercase tracking-widest font-bold">Confidence</span>
                     <p className="text-lg font-black text-neonBlue">{evaluation.confidence}%</p>
                   </div>
                   
-                  <div className="bg-slate-950/30 border border-white/5 p-3 rounded-lg text-center space-y-1">
+                  <div className="bg-slate-200/50 dark:bg-slate-950/30 border border-slate-200 dark:border-white/5 p-3 rounded-lg text-center space-y-1">
                     <span className="text-[10px] text-slate-500 uppercase tracking-widest font-bold">Grammar</span>
                     <p className="text-lg font-black text-violet-400">{evaluation.grammar}%</p>
                   </div>
 
-                  <div className="bg-slate-950/30 border border-white/5 p-3 rounded-lg text-center space-y-1">
+                  <div className="bg-slate-200/50 dark:bg-slate-950/30 border border-slate-200 dark:border-white/5 p-3 rounded-lg text-center space-y-1">
                     <span className="text-[10px] text-slate-500 uppercase tracking-widest font-bold">Clarity</span>
                     <p className="text-lg font-black text-sky-400">{evaluation.clarity}%</p>
                   </div>
 
-                  <div className="bg-slate-950/30 border border-white/5 p-3 rounded-lg text-center space-y-1">
+                  <div className="bg-slate-200/50 dark:bg-slate-950/30 border border-slate-200 dark:border-white/5 p-3 rounded-lg text-center space-y-1">
                     <span className="text-[10px] text-slate-500 uppercase tracking-widest font-bold">Fluency</span>
                     <p className="text-lg font-black text-emerald-400">{evaluation.fluency}%</p>
                   </div>
@@ -411,18 +411,18 @@ const InterviewPage = ({ user, token, API_BASE }) => {
                 </div>
 
                 {/* Qualitative Feedback */}
-                <div className="space-y-2 border-t border-white/5 pt-3">
-                  <span className="text-xs font-semibold text-slate-300">Mentorship Feedback</span>
-                  <p className="text-xs text-slate-400 leading-relaxed bg-slate-950/20 p-3 rounded border border-white/5">
+                <div className="space-y-2 border-t border-slate-200 dark:border-white/5 pt-3">
+                  <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">Mentorship Feedback</span>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed bg-slate-200/50 dark:bg-slate-950/20 p-3 rounded border border-slate-200 dark:border-white/5">
                     {evaluation.feedback}
                   </p>
                 </div>
 
               </div>
             ) : (
-              <div className="glass-panel p-6 rounded-2xl text-center flex flex-col items-center justify-center h-full min-h-[30vh] border border-dashed border-white/10 text-slate-505">
+              <div className="glass-panel p-6 rounded-2xl text-center flex flex-col items-center justify-center h-full min-h-[30vh] border border-dashed border-slate-300 dark:border-white/10 text-slate-505">
                 <BarChart2 className="w-10 h-10 text-slate-650 mb-2" />
-                <h3 className="text-xs font-semibold text-slate-400">Waiting for response</h3>
+                <h3 className="text-xs font-semibold text-slate-600 dark:text-slate-400">Waiting for response</h3>
                 <p className="text-[10px] text-slate-550 max-w-[180px] mt-0.5">
                   Speak or type your answer and hit submit to generate communication matrices.
                 </p>

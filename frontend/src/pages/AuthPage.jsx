@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { Shield, Sparkles, LogIn, UserPlus } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const AuthPage = () => {
   const { login, register, loginGoogle, API_BASE } = useContext(AuthContext);
@@ -109,7 +110,12 @@ const AuthPage = () => {
       <div className="absolute top-1/4 left-1/4 w-80 h-80 rounded-full bg-neonBlue/10 blur-[120px] pulse-glow-bg"></div>
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-royalViolet/10 blur-[150px] pulse-glow-bg"></div>
 
-      <div className="w-full max-w-md glass-panel p-8 rounded-2xl relative z-10 shadow-2xl border border-white/5">
+      <motion.div 
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
+        className="w-full max-w-md glass-panel p-8 rounded-2xl relative z-10 shadow-2xl border border-slate-200 dark:border-white/5"
+      >
         
         {/* Title */}
         <div className="text-center mb-8">
@@ -119,17 +125,17 @@ const AuthPage = () => {
           <h1 className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-neonBlue to-royalViolet bg-clip-text text-transparent">
             PlacementPilot AI
           </h1>
-          <p className="text-sm text-slate-400 mt-1">AI-Powered Placement Readiness & Mentorship</p>
+          <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">AI-Powered Placement Readiness & Mentorship</p>
         </div>
 
         {/* Toggle Role */}
-        <div className="flex bg-slate-900/60 p-1 rounded-lg mb-6 border border-white/5">
+        <div className="flex bg-slate-100/80 dark:bg-slate-900/60 p-1 rounded-lg mb-6 border border-slate-200 dark:border-white/5">
           <button
             type="button"
             className={`flex-1 py-1.5 text-xs font-semibold rounded-md transition-all duration-300 ${
               role === 'student'
                 ? 'bg-blue-600 text-white shadow-md'
-                : 'text-slate-400 hover:text-white'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
             onClick={() => setRole('student')}
           >
@@ -140,7 +146,7 @@ const AuthPage = () => {
             className={`flex-1 py-1.5 text-xs font-semibold rounded-md transition-all duration-300 ${
               role === 'admin'
                 ? 'bg-violet-600 text-white shadow-md'
-                : 'text-slate-400 hover:text-white'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
             onClick={() => setRole('admin')}
           >
@@ -148,19 +154,26 @@ const AuthPage = () => {
           </button>
         </div>
 
-        {error && (
-          <div className="bg-red-500/10 border border-red-500/30 text-red-400 text-xs p-3 rounded-lg mb-5 text-center">
-            {error}
-          </div>
-        )}
+        <AnimatePresence mode="wait">
+          {error && (
+            <motion.div 
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="bg-red-500/10 border border-red-500/30 text-red-400 text-xs p-3 rounded-lg mb-5 text-center"
+            >
+              {error}
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {!isLogin && !isForgotPassword && (
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">Full Name</label>
+              <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">Full Name</label>
               <input
                 type="text"
-                className="w-full bg-slate-950/60 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-neonBlue transition-colors"
+                className="w-full bg-slate-200/50 dark:bg-slate-950/60 border border-slate-300 dark:border-white/10 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none focus:border-neonBlue transition-colors"
                 placeholder="Pratik Patil"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -171,10 +184,10 @@ const AuthPage = () => {
 
           {(!isForgotPassword || resetStep === 1) && (
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">Email Address</label>
+              <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">Email Address</label>
               <input
                 type="email"
-                className="w-full bg-slate-950/60 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-neonBlue transition-colors"
+                className="w-full bg-slate-200/50 dark:bg-slate-950/60 border border-slate-300 dark:border-white/10 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none focus:border-neonBlue transition-colors"
                 placeholder={role === 'admin' ? 'admin@placementpilot.ai' : 'student@college.edu'}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -186,14 +199,14 @@ const AuthPage = () => {
           {(!isForgotPassword || resetStep === 2) && (
             <div>
               <div className="flex justify-between items-center mb-1">
-                <label className="block text-xs font-medium text-slate-400">
+                <label className="block text-xs font-medium text-slate-600 dark:text-slate-400">
                   {isForgotPassword ? 'New Password' : 'Password'}
                 </label>
                 {isLogin && !isForgotPassword && (
                   <button 
                     type="button" 
                     onClick={() => { setIsForgotPassword(true); setError(''); setResetStep(1); }}
-                    className="text-[10px] text-neonBlue hover:text-white transition-colors"
+                    className="text-[10px] text-neonBlue hover:text-slate-900 dark:text-white transition-colors"
                   >
                     Forgot Password?
                   </button>
@@ -201,7 +214,7 @@ const AuthPage = () => {
               </div>
               <input
                 type="password"
-                className="w-full bg-slate-950/60 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-neonBlue transition-colors"
+                className="w-full bg-slate-200/50 dark:bg-slate-950/60 border border-slate-300 dark:border-white/10 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none focus:border-neonBlue transition-colors"
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -213,7 +226,7 @@ const AuthPage = () => {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-3 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 text-white shadow-lg transition-all duration-300 ${
+            className={`w-full py-3 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 text-slate-900 dark:text-white shadow-lg transition-all duration-300 ${
               role === 'admin' 
                 ? 'bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 shadow-violet-500/10'
                 : 'bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 shadow-blue-500/10'
@@ -242,9 +255,9 @@ const AuthPage = () => {
 
         {/* Divider */}
         <div className="flex items-center my-6">
-          <div className="flex-grow border-t border-white/10"></div>
+          <div className="flex-grow border-t border-slate-300 dark:border-white/10"></div>
           <span className="text-[10px] text-slate-500 uppercase tracking-widest px-3">or continue with</span>
-          <div className="flex-grow border-t border-white/10"></div>
+          <div className="flex-grow border-t border-slate-300 dark:border-white/10"></div>
         </div>
 
         {/* Mock Google Login */}
@@ -252,7 +265,7 @@ const AuthPage = () => {
           onClick={handleMockGoogleLogin}
           type="button"
           disabled={loading}
-          className="w-full py-2.5 bg-slate-900 hover:bg-slate-850 border border-white/10 rounded-lg text-xs font-semibold text-slate-200 hover:text-white flex items-center justify-center gap-2.5 transition-colors"
+          className="w-full py-2.5 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:bg-slate-850 border border-slate-300 dark:border-white/10 rounded-lg text-xs font-semibold text-slate-800 dark:text-slate-200 hover:text-slate-900 dark:text-white flex items-center justify-center gap-2.5 transition-colors"
         >
           <svg className="w-4 h-4" viewBox="0 0 24 24">
             <path
@@ -271,7 +284,7 @@ const AuthPage = () => {
                 setIsForgotPassword(false);
                 setError('');
               }}
-              className="text-xs text-slate-400 hover:text-white transition-colors font-medium"
+              className="text-xs text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors font-medium"
             >
               Back to Sign In
             </button>
@@ -283,7 +296,7 @@ const AuthPage = () => {
                 setIsLogin(!isLogin);
                 setError('');
               }}
-              className="text-xs text-slate-400 hover:text-neonBlue transition-colors font-medium"
+              className="text-xs text-slate-600 dark:text-slate-400 hover:text-neonBlue transition-colors font-medium"
             >
               {isLogin ? "Don't have an account? Sign Up" : "Already have an account? Sign In"}
             </button>
@@ -294,12 +307,12 @@ const AuthPage = () => {
           <div className="mt-5 p-3 rounded-lg bg-violet-600/10 border border-violet-500/20 text-center">
             <p className="text-[10px] text-violet-400 font-mono">
               Demo Admin Mode:<br/>
-              User: <span className="text-white">admin@placementpilot.ai</span><br/>
-              Pass: <span className="text-white">admin_password_123</span>
+              User: <span className="text-slate-900 dark:text-white">admin@placementpilot.ai</span><br/>
+              Pass: <span className="text-slate-900 dark:text-white">admin_password_123</span>
             </p>
           </div>
         )}
-      </div>
+      </motion.div>
     </div>
   );
 };

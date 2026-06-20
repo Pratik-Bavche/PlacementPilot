@@ -77,12 +77,12 @@ const AdminPage = ({ token, API_BASE }) => {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-xl font-bold text-white">Admin Control Panel</h2>
-          <p className="text-xs text-slate-400">Review student statistics, moderate interview hubs, and adjust content guidelines</p>
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white">Admin Control Panel</h2>
+          <p className="text-xs text-slate-600 dark:text-slate-400">Review student statistics, moderate interview hubs, and adjust content guidelines</p>
         </div>
         <button
           onClick={fetchAdminData}
-          className="p-2 bg-slate-900 hover:bg-slate-850 border border-white/5 hover:border-white/10 text-slate-350 hover:text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors"
+          className="p-2 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-white/5 hover:border-slate-300 dark:border-white/10 text-slate-350 hover:text-slate-900 dark:text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors"
         >
           <RefreshCw className="w-3.5 h-3.5" /> Sync Data
         </button>
@@ -93,7 +93,7 @@ const AdminPage = ({ token, API_BASE }) => {
         <div className="glass-panel p-4 rounded-xl flex items-center justify-between">
           <div>
             <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Registered Students</span>
-            <p className="text-2xl font-black text-white">{totalStudents}</p>
+            <p className="text-2xl font-black text-slate-900 dark:text-white">{totalStudents}</p>
           </div>
           <Users className="w-8 h-8 text-blue-500/30" />
         </div>
@@ -119,13 +119,13 @@ const AdminPage = ({ token, API_BASE }) => {
         
         {/* Student directory list */}
         <div className="lg:col-span-2 glass-panel p-6 rounded-2xl space-y-4">
-          <h3 className="text-sm font-bold text-white border-b border-white/5 pb-2">Student Directory</h3>
+          <h3 className="text-sm font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-white/5 pb-2">Student Directory</h3>
           
           <div className="space-y-3.5 max-h-[50vh] overflow-y-auto pr-1">
             {users.filter(u => u.role === 'student').map((stud) => (
-              <div key={stud._id} className="flex justify-between items-center p-3.5 bg-slate-950/40 border border-white/5 rounded-xl text-xs">
+              <div key={stud._id} className="flex justify-between items-center p-3.5 bg-slate-200/50 dark:bg-slate-950/40 border border-slate-200 dark:border-white/5 rounded-xl text-xs">
                 <div>
-                  <span className="font-bold text-slate-200 block">{stud.name}</span>
+                  <span className="font-bold text-slate-800 dark:text-slate-200 block">{stud.name}</span>
                   <p className="text-[10px] text-slate-500 mt-0.5">{stud.email} • Streak: {stud.streak} days</p>
                 </div>
 
@@ -140,13 +140,13 @@ const AdminPage = ({ token, API_BASE }) => {
 
         {/* Experience moderation queue */}
         <div className="glass-panel p-6 rounded-2xl space-y-4">
-          <h3 className="text-sm font-bold text-white border-b border-white/5 pb-2">Interview Hub Moderation</h3>
+          <h3 className="text-sm font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-white/5 pb-2">Interview Hub Moderation</h3>
 
           <div className="space-y-3 max-h-[50vh] overflow-y-auto pr-1">
             {pendingExps.map((exp) => (
-              <div key={exp._id} className="p-3.5 bg-slate-950/30 border border-white/5 rounded-xl space-y-3 text-xs">
+              <div key={exp._id} className="p-3.5 bg-slate-200/50 dark:bg-slate-950/30 border border-slate-200 dark:border-white/5 rounded-xl space-y-3 text-xs">
                 <div>
-                  <span className="font-bold text-slate-200 block">{exp.company} ({exp.role})</span>
+                  <span className="font-bold text-slate-800 dark:text-slate-200 block">{exp.company} ({exp.role})</span>
                   <p className="text-[10px] text-slate-500 mt-0.5">Submitted by: {exp.userName}</p>
                 </div>
 

@@ -122,17 +122,17 @@ const HubAndArenaPage = ({ user, token, API_BASE }) => {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-xl font-bold text-white">Placement Hub & Battle Arena</h2>
-          <p className="text-xs text-slate-400">Share previous recruitment experiences or challenge colleagues in mock battles</p>
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white">Placement Hub & Battle Arena</h2>
+          <p className="text-xs text-slate-600 dark:text-slate-400">Share previous recruitment experiences or challenge colleagues in mock battles</p>
         </div>
       </div>
 
       {/* Sub Tabs Toggle */}
-      <div className="flex bg-slate-900/60 p-1 rounded-lg border border-white/5 w-fit">
+      <div className="flex bg-slate-100/80 dark:bg-slate-900/60 p-1 rounded-lg border border-slate-200 dark:border-white/5 w-fit">
         <button
           onClick={() => setSubTab('hub')}
           className={`px-4 py-1.5 text-xs font-semibold rounded-md transition-all duration-300 ${
-            subTab === 'hub' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-400 hover:text-white'
+            subTab === 'hub' ? 'bg-blue-600 text-slate-900 dark:text-white shadow-md' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white'
           }`}
         >
           Interview Experience Hub
@@ -140,7 +140,7 @@ const HubAndArenaPage = ({ user, token, API_BASE }) => {
         <button
           onClick={() => setSubTab('arena')}
           className={`px-4 py-1.5 text-xs font-semibold rounded-md transition-all duration-300 ${
-            subTab === 'arena' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-400 hover:text-white'
+            subTab === 'arena' ? 'bg-blue-600 text-slate-900 dark:text-white shadow-md' : 'text-slate-600 dark:text-slate-400 hover:text-white'
           }`}
         >
           Placement Battle Arena
@@ -152,8 +152,8 @@ const HubAndArenaPage = ({ user, token, API_BASE }) => {
           
           {/* Main Experience Logs List */}
           <div className="lg:col-span-3 space-y-4">
-            <div className="flex justify-between items-center border-b border-white/5 pb-2">
-              <h3 className="text-sm font-semibold text-white">Recent Interview Reviews</h3>
+            <div className="flex justify-between items-center border-b border-slate-200 dark:border-white/5 pb-2">
+              <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Recent Interview Reviews</h3>
               <button
                 onClick={() => setShowShareForm(!showShareForm)}
                 className="bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-semibold px-3 py-1.5 rounded transition-colors flex items-center gap-1"
@@ -167,10 +167,10 @@ const HubAndArenaPage = ({ user, token, API_BASE }) => {
             ) : experiences.length > 0 ? (
               experiences.map((exp) => (
                 <div key={exp._id} className="glass-panel p-5 rounded-2xl space-y-3 relative">
-                  <div className="flex justify-between items-start border-b border-white/5 pb-2">
+                  <div className="flex justify-between items-start border-b border-slate-200 dark:border-white/5 pb-2">
                     <div>
-                      <span className="text-xs font-black text-white">{exp.company}</span>
-                      <p className="text-[10px] text-slate-400 font-medium">{exp.role} • {exp.userName}</p>
+                      <span className="text-xs font-black text-slate-900 dark:text-white">{exp.company}</span>
+                      <p className="text-[10px] text-slate-600 dark:text-slate-400 font-medium">{exp.role} • {exp.userName}</p>
                     </div>
 
                     <div className="flex gap-2">
@@ -190,7 +190,7 @@ const HubAndArenaPage = ({ user, token, API_BASE }) => {
                     <span className="text-[10px] text-slate-450 font-bold uppercase tracking-wider block">Recruitment Rounds</span>
                     <div className="flex flex-wrap gap-1.5">
                       {exp.rounds.map((rnd, idx) => (
-                        <span key={idx} className="text-[10px] bg-slate-900 border border-white/5 text-slate-300 px-2.5 py-0.5 rounded">
+                        <span key={idx} className="text-[10px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/5 text-slate-700 dark:text-slate-300 px-2.5 py-0.5 rounded">
                           {rnd}
                         </span>
                       ))}
@@ -202,7 +202,7 @@ const HubAndArenaPage = ({ user, token, API_BASE }) => {
                     <span className="text-[10px] text-slate-450 font-bold uppercase tracking-wider block">Questions Recalled</span>
                     <ul className="space-y-1 pl-4 list-disc">
                       {exp.questions.map((q, idx) => (
-                        <li key={idx} className="text-xs text-slate-400 leading-relaxed">
+                        <li key={idx} className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                           {q}
                         </li>
                       ))}
@@ -219,50 +219,50 @@ const HubAndArenaPage = ({ user, token, API_BASE }) => {
           <div className="lg:col-span-2">
             {showShareForm && (
               <div className="glass-panel p-6 rounded-2xl space-y-4 border border-blue-500/20">
-                <div className="flex items-center gap-2 border-b border-white/5 pb-2">
+                <div className="flex items-center gap-2 border-b border-slate-200 dark:border-white/5 pb-2">
                   <Share2 className="w-5 h-5 text-blue-450" />
-                  <h3 className="text-sm font-semibold text-white">Share Interview Experience</h3>
+                  <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Share Interview Experience</h3>
                 </div>
 
                 <form onSubmit={handleShareSubmit} className="space-y-3">
                   <div>
-                    <label className="block text-[10px] font-semibold text-slate-400 mb-0.5">Company Name</label>
+                    <label className="block text-[10px] font-semibold text-slate-600 dark:text-slate-400 mb-0.5">Company Name</label>
                     <input 
                       type="text" required placeholder="Google" value={company} onChange={e => setCompany(e.target.value)}
-                      className="w-full bg-slate-950/60 border border-white/10 rounded px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-neonBlue"
+                      className="w-full bg-slate-200/50 dark:bg-slate-950/60 border border-slate-300 dark:border-white/10 rounded px-2.5 py-1.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-neonBlue"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-semibold text-slate-400 mb-0.5">Hiring Role</label>
+                    <label className="block text-[10px] font-semibold text-slate-600 dark:text-slate-400 mb-0.5">Hiring Role</label>
                     <input 
                       type="text" required placeholder="Software Engineer Intern" value={role} onChange={e => setRole(e.target.value)}
-                      className="w-full bg-slate-950/60 border border-white/10 rounded px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-neonBlue"
+                      className="w-full bg-slate-200/50 dark:bg-slate-950/60 border border-slate-300 dark:border-white/10 rounded px-2.5 py-1.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-neonBlue"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-semibold text-slate-400 mb-0.5">Interview Rounds (One per line)</label>
+                    <label className="block text-[10px] font-semibold text-slate-600 dark:text-slate-400 mb-0.5">Interview Rounds (One per line)</label>
                     <textarea 
                       required placeholder="Coding OA&#10;Technical DSA Round" value={roundsText} onChange={e => setRoundsText(e.target.value)}
-                      className="w-full h-20 bg-slate-950/60 border border-white/10 rounded px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-neonBlue resize-none font-sans"
+                      className="w-full h-20 bg-slate-200/50 dark:bg-slate-950/60 border border-slate-300 dark:border-white/10 rounded px-2.5 py-1.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-neonBlue resize-none font-sans"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-semibold text-slate-400 mb-0.5">Questions Recalled (One per line)</label>
+                    <label className="block text-[10px] font-semibold text-slate-600 dark:text-slate-400 mb-0.5">Questions Recalled (One per line)</label>
                     <textarea 
                       required placeholder="Reverse linked list.&#10;System architecture basics." value={questionsText} onChange={e => setQuestionsText(e.target.value)}
-                      className="w-full h-24 bg-slate-950/60 border border-white/10 rounded px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-neonBlue resize-none font-sans"
+                      className="w-full h-24 bg-slate-200/50 dark:bg-slate-950/60 border border-slate-300 dark:border-white/10 rounded px-2.5 py-1.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-neonBlue resize-none font-sans"
                     />
                   </div>
 
                   <div className="grid grid-cols-2 gap-2">
                     <div>
-                      <label className="block text-[10px] font-semibold text-slate-400 mb-0.5">Difficulty</label>
+                      <label className="block text-[10px] font-semibold text-slate-600 dark:text-slate-400 mb-0.5">Difficulty</label>
                       <select 
                         value={difficulty} onChange={e => setDifficulty(e.target.value)}
-                        className="w-full bg-slate-950/60 border border-white/10 rounded px-2 py-1.5 text-xs text-white focus:outline-none focus:border-neonBlue"
+                        className="w-full bg-slate-200/50 dark:bg-slate-950/60 border border-slate-300 dark:border-white/10 rounded px-2 py-1.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-neonBlue"
                       >
                         <option value="Easy">Easy</option>
                         <option value="Medium">Medium</option>
@@ -271,10 +271,10 @@ const HubAndArenaPage = ({ user, token, API_BASE }) => {
                     </div>
 
                     <div>
-                      <label className="block text-[10px] font-semibold text-slate-400 mb-0.5">Selection Status</label>
+                      <label className="block text-[10px] font-semibold text-slate-600 dark:text-slate-400 mb-0.5">Selection Status</label>
                       <select 
                         value={status} onChange={e => setStatus(e.target.value)}
-                        className="w-full bg-slate-950/60 border border-white/10 rounded px-2 py-1.5 text-xs text-white focus:outline-none focus:border-neonBlue"
+                        className="w-full bg-slate-200/50 dark:bg-slate-950/60 border border-slate-300 dark:border-white/10 rounded px-2 py-1.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-neonBlue"
                       >
                         <option value="Selected">Selected</option>
                         <option value="Rejected">Rejected</option>
@@ -299,7 +299,7 @@ const HubAndArenaPage = ({ user, token, API_BASE }) => {
           
           {/* Contest challenges list */}
           <div className="lg:col-span-2 space-y-4">
-            <h3 className="text-sm font-semibold text-white border-b border-white/5 pb-2">Active Battle arenas</h3>
+            <h3 className="text-sm font-semibold text-slate-900 dark:text-white border-b border-slate-200 dark:border-white/5 pb-2">Active Battle arenas</h3>
 
             {['DSA Contest', 'Resume Battle', 'Mock Interview Arena'].map((contest) => (
               <div 
@@ -308,17 +308,17 @@ const HubAndArenaPage = ({ user, token, API_BASE }) => {
                 className={`p-4 rounded-xl border flex items-center justify-between cursor-pointer transition-all duration-300 ${
                   selectedContest === contest 
                     ? 'bg-blue-600/10 border-blue-500/40 hover:border-blue-500/60' 
-                    : 'bg-slate-900/35 border-white/5 hover:border-blue-500/25'
+                    : 'bg-slate-100/80 dark:bg-slate-900/35 border-slate-200 dark:border-white/5 hover:border-blue-500/25'
                 }`}
               >
                 <div className="flex items-center gap-3">
-                  <Swords className={`w-5 h-5 ${selectedContest === contest ? 'text-blue-450 animate-pulse' : 'text-slate-400'}`} />
+                  <Swords className={`w-5 h-5 ${selectedContest === contest ? 'text-blue-450 animate-pulse' : 'text-slate-600 dark:text-slate-400'}`} />
                   <div>
-                    <span className="text-xs font-bold text-slate-200">{contest}</span>
+                    <span className="text-xs font-bold text-slate-800 dark:text-slate-200">{contest}</span>
                     <p className="text-[9px] text-slate-500">Weekly Competitive Event</p>
                   </div>
                 </div>
-                <span className="text-[10px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded">Active</span>
+                <span className="text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2 py-0.5 rounded">Active</span>
               </div>
             ))}
 
@@ -332,9 +332,9 @@ const HubAndArenaPage = ({ user, token, API_BASE }) => {
 
           {/* Leaderboard tables */}
           <div className="lg:col-span-3 glass-panel p-6 rounded-2xl space-y-4">
-            <div className="flex items-center gap-2 border-b border-white/5 pb-2">
+            <div className="flex items-center gap-2 border-b border-slate-200 dark:border-white/5 pb-2">
               <Trophy className="w-5 h-5 text-amber-500" />
-              <h3 className="text-sm font-semibold text-white">{selectedContest} Rankings</h3>
+              <h3 className="text-sm font-semibold text-slate-900 dark:text-white">{selectedContest} Rankings</h3>
             </div>
 
             <div className="space-y-3">
@@ -342,14 +342,14 @@ const HubAndArenaPage = ({ user, token, API_BASE }) => {
                 <div className="text-center py-6 text-slate-500 text-xs">Fetching rankings...</div>
               ) : leaderboard.length > 0 ? (
                 leaderboard.map((usr, idx) => (
-                  <div key={idx} className="flex justify-between items-center p-3 bg-slate-950/40 border border-white/5 rounded-lg text-xs">
+                  <div key={idx} className="flex justify-between items-center p-3 bg-slate-200/50 dark:bg-slate-950/40 border border-slate-200 dark:border-white/5 rounded-lg text-xs">
                     <div className="flex items-center gap-3">
                       <span className={`w-5 h-5 rounded-full flex items-center justify-center font-black ${
-                        idx === 0 ? 'bg-amber-500/20 text-amber-500 border border-amber-500/20' : idx === 1 ? 'bg-slate-300/20 text-slate-300 border border-slate-350/20' : idx === 2 ? 'bg-amber-700/20 text-amber-700 border border-amber-800/20' : 'bg-slate-800 text-slate-400'
+                        idx === 0 ? 'bg-amber-500/20 text-amber-500 border border-amber-500/20' : idx === 1 ? 'bg-slate-300/20 text-slate-700 dark:text-slate-300 border border-slate-350/20' : idx === 2 ? 'bg-amber-700/20 text-amber-700 border border-amber-800/20' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
                       }`}>
                         {idx + 1}
                       </span>
-                      <span className="font-bold text-slate-200">{usr.userName || 'Student'}</span>
+                      <span className="font-bold text-slate-800 dark:text-slate-200">{usr.userName || 'Student'}</span>
                     </div>
 
                     <span className="text-neonBlue font-extrabold">{usr.score} Points</span>

@@ -105,8 +105,8 @@ const RoadmapPage = ({ user, token, API_BASE }) => {
       
       {/* Header */}
       <div>
-        <h2 className="text-xl font-bold text-white">Personalized Learning Roadmap</h2>
-        <p className="text-xs text-slate-400">Customized day-by-day learning tasks tailored to match your target placements</p>
+        <h2 className="text-xl font-bold text-slate-900 dark:text-white">Personalized Learning Roadmap</h2>
+        <p className="text-xs text-slate-600 dark:text-slate-400">Customized day-by-day learning tasks tailored to match your target placements</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
@@ -114,18 +114,18 @@ const RoadmapPage = ({ user, token, API_BASE }) => {
         {/* Settings Generator */}
         <div className="lg:col-span-2 space-y-4">
           <div className="glass-panel p-6 rounded-2xl space-y-4">
-            <div className="flex items-center gap-2 border-b border-white/5 pb-2">
+            <div className="flex items-center gap-2 border-b border-slate-200 dark:border-white/5 pb-2">
               <Compass className="w-5 h-5 text-blue-400" />
-              <h3 className="text-sm font-semibold text-white">Roadmap Parameters</h3>
+              <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Roadmap Parameters</h3>
             </div>
 
             <form onSubmit={handleGenerate} className="space-y-4">
               <div>
-                <label className="block text-xs text-slate-400 mb-1">Target Company</label>
+                <label className="block text-xs text-slate-600 dark:text-slate-400 mb-1">Target Company</label>
                 <select
                   value={targetCompany}
                   onChange={(e) => setTargetCompany(e.target.value)}
-                  className="w-full bg-slate-950 border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-neonBlue"
+                  className="w-full bg-slate-950 border border-slate-300 dark:border-white/10 rounded-lg px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-neonBlue"
                 >
                   {COMPANIES.map((c, idx) => (
                     <option key={idx} value={c}>{c}</option>
@@ -134,11 +134,11 @@ const RoadmapPage = ({ user, token, API_BASE }) => {
               </div>
 
               <div>
-                <label className="block text-xs text-slate-400 mb-1">Target Career Goal</label>
+                <label className="block text-xs text-slate-600 dark:text-slate-400 mb-1">Target Career Goal</label>
                 <select
                   value={goal}
                   onChange={(e) => setGoal(e.target.value)}
-                  className="w-full bg-slate-950 border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-neonBlue"
+                  className="w-full bg-slate-950 border border-slate-300 dark:border-white/10 rounded-lg px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-neonBlue"
                 >
                   <option value="SDE">Software Development Engineer (SDE)</option>
                   <option value="Frontend Engineer">Frontend Specialist</option>
@@ -167,12 +167,12 @@ const RoadmapPage = ({ user, token, API_BASE }) => {
             </form>
 
             {roadmap && (
-              <div className="pt-4 border-t border-white/5 space-y-2">
+              <div className="pt-4 border-t border-slate-200 dark:border-white/5 space-y-2">
                 <div className="flex justify-between items-center text-xs">
                   <span className="text-slate-450 font-medium">Roadmap Progress</span>
                   <span className="text-neonBlue font-extrabold">{completionPercent}%</span>
                 </div>
-                <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                <div className="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
                   <div 
                     className="bg-gradient-to-r from-neonBlue to-royalViolet h-full rounded-full transition-all duration-500" 
                     style={{ width: `${completionPercent}%` }}
@@ -192,11 +192,11 @@ const RoadmapPage = ({ user, token, API_BASE }) => {
             <div className="space-y-4">
               {roadmap.weeks.map((week) => (
                 <div key={week.weekNumber} className="glass-panel p-5 rounded-2xl space-y-3">
-                  <div className="flex justify-between items-center border-b border-white/5 pb-2">
+                  <div className="flex justify-between items-center border-b border-slate-200 dark:border-white/5 pb-2">
                     <span className="text-xs font-black text-neonBlue uppercase tracking-wider">
                       Week {week.weekNumber}
                     </span>
-                    <span className="text-xs font-semibold text-slate-300">
+                    <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">
                       {week.title}
                     </span>
                   </div>
@@ -209,16 +209,16 @@ const RoadmapPage = ({ user, token, API_BASE }) => {
                         className={`p-3 rounded-lg border flex items-center justify-between cursor-pointer transition-all duration-300 ${
                           task.completed
                             ? 'bg-emerald-950/10 border-emerald-500/20 hover:border-emerald-500/30'
-                            : 'bg-slate-900/30 border-white/5 hover:border-blue-500/20'
+                            : 'bg-slate-100/80 dark:bg-slate-900/30 border-slate-200 dark:border-white/5 hover:border-blue-500/20'
                         }`}
                       >
                         <div className="flex items-center gap-3">
                           <div className={`w-4 h-4 rounded border flex items-center justify-center transition-colors ${
-                            task.completed ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-slate-600'
+                            task.completed ? 'bg-emerald-500 border-emerald-500 text-slate-900 dark:text-white' : 'border-slate-600'
                           }`}>
                             {task.completed && <span className="text-[9px] font-bold">✓</span>}
                           </div>
-                          <span className={`text-xs ${task.completed ? 'text-slate-500 line-through' : 'text-slate-200'}`}>
+                          <span className={`text-xs ${task.completed ? 'text-slate-500 line-through' : 'text-slate-800 dark:text-slate-200'}`}>
                             {task.title}
                           </span>
                         </div>
@@ -229,9 +229,9 @@ const RoadmapPage = ({ user, token, API_BASE }) => {
               ))}
             </div>
           ) : (
-            <div className="glass-panel p-8 rounded-2xl text-center flex flex-col items-center justify-center min-h-[40vh] border border-dashed border-white/10 text-slate-500 space-y-2">
+            <div className="glass-panel p-8 rounded-2xl text-center flex flex-col items-center justify-center min-h-[40vh] border border-dashed border-slate-300 dark:border-white/10 text-slate-500 space-y-2">
               <Compass className="w-12 h-12 text-slate-650" />
-              <h3 className="text-sm font-semibold text-slate-400">No Learning Roadmap Generated</h3>
+              <h3 className="text-sm font-semibold text-slate-600 dark:text-slate-400">No Learning Roadmap Generated</h3>
               <p className="text-xs text-slate-500 max-w-xs">
                 Select your target company parameters and goal, and launch a re-generation track.
               </p>
