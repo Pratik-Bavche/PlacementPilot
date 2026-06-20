@@ -111,7 +111,7 @@ const App = () => {
 
       {/* Sidebar Navigation */}
       <aside 
-        className={`fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-slate-950/80 backdrop-blur-md border-r border-slate-200 dark:border-white/5 p-4 flex flex-col justify-between transform transition-transform duration-300 ${
+        className={`fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-slate-950/80 backdrop-blur-md border-r border-slate-200 dark:border-white/5 p-4 flex flex-col justify-between transform transition-all duration-500 ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         } lg:relative lg:translate-x-0`}
       >
@@ -187,7 +187,7 @@ const App = () => {
       <div className="flex-1 flex flex-col min-w-0">
         
         {/* Navbar */}
-        <header className="h-16 border-b border-slate-200 dark:border-white/5 bg-white/70 dark:bg-slate-950/40 backdrop-blur-md px-6 flex items-center justify-between relative z-40">
+        <header className="h-16 border-b border-slate-200 dark:border-white/5 bg-white/70 dark:bg-slate-950/40 backdrop-blur-md px-6 flex items-center justify-between relative z-40 transition-colors duration-500">
           <div className="flex items-center gap-2">
             <button
               onClick={() => setSidebarOpen(true)}
@@ -204,10 +204,20 @@ const App = () => {
           <div className="flex items-center gap-4">
             <button 
               onClick={toggleTheme}
-              className="p-2 rounded-full bg-slate-200 dark:bg-slate-900 text-slate-600 dark:text-slate-300 border border-slate-300 dark:border-white/10 hover:shadow-md transition-all"
+              className="p-2 rounded-full bg-slate-200 dark:bg-slate-900 text-slate-600 dark:text-slate-300 border border-slate-300 dark:border-white/10 hover:shadow-md transition-all w-9 h-9 flex items-center justify-center overflow-hidden"
               title="Toggle Theme"
             >
-              {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={isDarkMode ? 'dark' : 'light'}
+                  initial={{ y: -20, opacity: 0, rotate: -90 }}
+                  animate={{ y: 0, opacity: 1, rotate: 0 }}
+                  exit={{ y: 20, opacity: 0, rotate: 90 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+                </motion.div>
+              </AnimatePresence>
             </button>
             <div className="flex items-center gap-1.5 px-3 py-1.5 bg-orange-500/10 border border-orange-500/25 rounded-lg text-orange-500 text-xs font-extrabold shadow-sm">
               <Flame className="w-4 h-4 fill-orange-500/10 animate-pulse" />
