@@ -71,8 +71,8 @@ const CompanyPrepPage = ({ user, token, API_BASE, updateProfile }) => {
             onClick={() => setSelectedCompany(company)}
             className={`px-4 py-2 rounded-lg text-xs font-bold shrink-0 border transition-all duration-300 ${
               selectedCompany === company
-                ? 'bg-blue-600 border-blue-500 text-slate-900 dark:text-white shadow-lg shadow-blue-600/10'
-                : 'bg-slate-100/80 dark:bg-slate-900/50 border-slate-200 dark:border-white/5 text-slate-600 dark:text-slate-400 hover:text-white hover:border-slate-300 dark:border-white/10'
+                ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-600/10'
+                : 'bg-white dark:bg-slate-900/50 border-slate-200 dark:border-white/5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 hover:border-slate-300 dark:hover:border-white/10'
             }`}
           >
             {company}
@@ -107,7 +107,7 @@ const CompanyPrepPage = ({ user, token, API_BASE, updateProfile }) => {
                 {user.targetCompany !== selectedCompany ? (
                   <button 
                     onClick={handleSetTarget}
-                    className="bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-[10px] font-semibold px-3 py-1.5 rounded transition-colors"
+                    className="bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-semibold px-3 py-1.5 rounded transition-colors"
                   >
                     Set as Goal Company
                   </button>

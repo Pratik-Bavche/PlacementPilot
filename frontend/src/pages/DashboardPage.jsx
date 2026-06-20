@@ -128,7 +128,7 @@ const DashboardPage = ({ user, token, API_BASE, setTab }) => {
               </button>
               <button 
                 onClick={() => setTab('roadmap')}
-                className="bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-semibold px-4 py-2 rounded-lg transition-colors"
+                className="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors"
               >
                 View Learning Roadmap
               </button>
@@ -145,25 +145,25 @@ const DashboardPage = ({ user, token, API_BASE, setTab }) => {
         {/* Readiness Circular Score Widget */}
         <motion.div whileHover={{ scale: 1.02 }} className="glass-panel p-6 rounded-2xl flex flex-col items-center justify-center text-center">
           <h3 className="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-3">Overall Placement Readiness</h3>
-          <div className="relative w-32 h-32 flex items-center justify-center">
+          <div className="relative w-36 h-36 flex items-center justify-center">
             {/* Background Circle */}
             <svg className="absolute w-full h-full transform -rotate-90">
               <circle
-                cx="64"
-                cy="64"
-                r="52"
+                cx="72"
+                cy="72"
+                r="58"
                 strokeWidth="10"
                 stroke="rgba(255,255,255,0.03)"
                 fill="transparent"
               />
               {/* Foreground Gradient Circle */}
               <circle
-                cx="64"
-                cy="64"
-                r="52"
+                cx="72"
+                cy="72"
+                r="58"
                 strokeWidth="10"
-                strokeDasharray={2 * Math.PI * 52}
-                strokeDashoffset={2 * Math.PI * 52 * (1 - readinessVal / 100)}
+                strokeDasharray={2 * Math.PI * 58}
+                strokeDashoffset={2 * Math.PI * 58 * (1 - readinessVal / 100)}
                 strokeLinecap="round"
                 stroke="url(#bluePurpleGradient)"
                 fill="transparent"
@@ -175,14 +175,14 @@ const DashboardPage = ({ user, token, API_BASE, setTab }) => {
                 </linearGradient>
               </defs>
             </svg>
-            <div className="text-center z-10">
-              <span className="text-3xl font-extrabold text-slate-900 dark:text-white glow-text-blue">{readinessVal}%</span>
-              <p className="text-[9px] text-slate-500 font-bold uppercase tracking-wider mt-0.5">Readiness Score</p>
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-center z-10">
+              <span className="text-4xl font-extrabold text-slate-900 dark:text-white glow-text-blue">{readinessVal}%</span>
+              <p className="text-[8px] text-slate-500 font-bold uppercase tracking-wide mt-1">Readiness Score</p>
             </div>
           </div>
           <button 
             onClick={() => setTab('readiness')}
-            className="mt-4 text-xs font-semibold text-neonBlue hover:text-slate-900 dark:text-white flex items-center gap-1 transition-colors"
+            className="mt-4 text-xs font-semibold text-blue-600 dark:text-neonBlue hover:text-slate-900 dark:hover:text-white flex items-center gap-1 transition-colors"
           >
             Check Company Eligibility <ChevronRight className="w-3.5 h-3.5" />
           </button>

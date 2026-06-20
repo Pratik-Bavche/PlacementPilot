@@ -212,19 +212,44 @@ export const reviewGitHubRepo = async (repoUrl) => {
   if (!isAIActive()) {
     console.log(">>> Gemini Key not found. Using Mock GitHub Repository Reviewer.");
     await new Promise(resolve => setTimeout(resolve, 1400));
+    
+    // Generate pseudo-random metrics based on repoUrl string to ensure different repos yield different results
+    let seed = 0;
+    for (let i = 0; i < repoUrl.length; i++) {
+      seed += repoUrl.charCodeAt(i);
+    }
+    
+    const codeQuality = 5 + (seed % 5); // 5-9
+    const documentation = 4 + ((seed * 2) % 6); // 4-9
+    const scalability = 6 + ((seed * 3) % 4); // 6-9
+    const readability = 5 + ((seed * 7) % 5); // 5-9
+    const resumeImpact = 6 + ((seed * 11) % 5); // 6-10
+    
+    const overallScore = Math.round((codeQuality + documentation + scalability + readability + resumeImpact) * 2);
+    
+    const allSuggestions = [
+      "Add a comprehensive README.md containing build/run commands and architectural flow diagrams.",
+      "Modularize utility functions inside helper files to separate routes/handlers from core business logic.",
+      "Include configuration samples for system environment variables rather than hardcoding credentials.",
+      "Implement unit tests using Jest/mocha to improve code test coverage stats.",
+      "Consider using TypeScript to enforce static typing and prevent runtime type errors.",
+      "Add GitHub Actions CI/CD workflows to automatically run linters and tests.",
+      "Implement proper error boundaries and global exception handlers to prevent app crashes."
+    ];
+    
+    const suggestions = [];
+    suggestions.push(allSuggestions[seed % allSuggestions.length]);
+    suggestions.push(allSuggestions[(seed * 2) % allSuggestions.length]);
+    suggestions.push(allSuggestions[(seed * 3) % allSuggestions.length]);
+
     return {
-      codeQuality: 8,
-      documentation: 7,
-      scalability: 6,
-      overallScore: 78,
-      readability: 8,
-      resumeImpact: 9,
-      suggestions: [
-        "Add a comprehensive README.md containing build/run commands and architectural flow diagrams.",
-        "Modularize utility functions inside helper files to separate routes/handlers from core business logic.",
-        "Include configuration samples for system environment variables rather than hardcoding credentials.",
-        "Implement unit tests using Jest/mocha to improve code test coverage stats."
-      ]
+      codeQuality,
+      documentation,
+      scalability,
+      overallScore,
+      readability,
+      resumeImpact,
+      suggestions: [...new Set(suggestions)] // remove duplicates
     };
   }
 

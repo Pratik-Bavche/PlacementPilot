@@ -125,7 +125,7 @@ const RoadmapPage = ({ user, token, API_BASE }) => {
                 <select
                   value={targetCompany}
                   onChange={(e) => setTargetCompany(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-300 dark:border-white/10 rounded-lg px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-neonBlue"
+                  className="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-white/10 rounded-lg px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-neonBlue"
                 >
                   {COMPANIES.map((c, idx) => (
                     <option key={idx} value={c}>{c}</option>
@@ -138,7 +138,7 @@ const RoadmapPage = ({ user, token, API_BASE }) => {
                 <select
                   value={goal}
                   onChange={(e) => setGoal(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-300 dark:border-white/10 rounded-lg px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-neonBlue"
+                  className="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-white/10 rounded-lg px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-neonBlue"
                 >
                   <option value="SDE">Software Development Engineer (SDE)</option>
                   <option value="Frontend Engineer">Frontend Specialist</option>

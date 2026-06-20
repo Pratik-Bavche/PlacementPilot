@@ -4,13 +4,16 @@ import { Award, Compass, TrendingUp, AlertCircle, CheckCircle2, RefreshCw } from
 const ReadinessPage = ({ token, API_BASE }) => {
   const [predictions, setPredictions] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [recalculating, setRecalculating] = useState(false);
 
   useEffect(() => {
     fetchReadiness();
   }, []);
 
-  const fetchReadiness = async () => {
-    setLoading(true);
+  const fetchReadiness = async (isRecalculating = false) => {
+    if (isRecalculating) setRecalculating(true);
+    else setLoading(true);
+    
     try {
       const res = await fetch(`${API_BASE}/readiness/predict`, {
         headers: { 'Authorization': `Bearer ${token}` }
@@ -22,7 +25,8 @@ const ReadinessPage = ({ token, API_BASE }) => {
     } catch (e) {
       console.error(e);
     } finally {
-      setLoading(false);
+      if (isRecalculating) setRecalculating(false);
+      else setLoading(false);
     }
   };
 
@@ -46,10 +50,11 @@ const ReadinessPage = ({ token, API_BASE }) => {
           <p className="text-xs text-slate-600 dark:text-slate-400">Track company eligibility indices computed from your resume, DSA progress, and communication tests</p>
         </div>
         <button
-          onClick={fetchReadiness}
-          className="p-2 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-white/5 hover:border-slate-300 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors"
+          onClick={() => fetchReadiness(true)}
+          disabled={recalculating}
+          className="p-2 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-white/5 hover:border-slate-300 dark:hover:border-white/10 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors disabled:opacity-50"
         >
-          <RefreshCw className="w-3.5 h-3.5" /> Re-Evaluate
+          <RefreshCw className={`w-3.5 h-3.5 ${recalculating ? 'animate-spin' : ''}`} /> {recalculating ? 'Re-Evaluating...' : 'Re-Evaluate'}
         </button>
       </div>
 
@@ -91,7 +96,7 @@ const ReadinessPage = ({ token, API_BASE }) => {
                   </linearGradient>
                 </defs>
               </svg>
-              <div className="text-center z-10">
+              <div className={`absolute inset-0 flex flex-col items-center justify-center text-center z-10 transition-opacity duration-300 ${recalculating ? 'opacity-50' : 'opacity-100'}`}>
                 <span className="text-4xl font-black text-slate-900 dark:text-white glow-text-purple">{overallVal}%</span>
                 <p className="text-[9px] text-slate-500 font-bold uppercase tracking-wider mt-1">Ready Index</p>
               </div>
@@ -140,7 +145,7 @@ const ReadinessPage = ({ token, API_BASE }) => {
                   <div key={idx} className="space-y-1.5">
                     <div className="flex justify-between items-center text-xs">
                       <div className="flex items-center gap-2">
-                        <div className="w-6 h-6 rounded bg-slate-950 flex items-center justify-center text-[10px] font-bold text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-white/5">
+                        <div className="w-6 h-6 rounded bg-slate-100 dark:bg-slate-950 flex items-center justify-center text-[10px] font-bold text-slate-700 dark:text-slate-400 border border-slate-300 dark:border-white/5">
                           {p.company[0]}
                         </div>
                         <span className="font-bold text-slate-800 dark:text-slate-200">{p.company}</span>
