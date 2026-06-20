@@ -202,7 +202,7 @@ const DashboardPage = ({ user, token, API_BASE, setTab }) => {
           <div className="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden">
             <div className="bg-sky-400 h-full rounded-full" style={{ width: `${stats ? stats.resumeScore : 82}%` }}></div>
           </div>
-        </div>
+        </motion.div>
 
         <div className="glass-panel p-4 rounded-xl space-y-1 bg-slate-100/80 dark:bg-slate-900/30">
           <div className="flex justify-between items-start">
@@ -255,7 +255,7 @@ const DashboardPage = ({ user, token, API_BASE, setTab }) => {
           </div>
           <p className="text-lg font-bold text-slate-900 dark:text-white truncate">{user.targetCompany || 'Google'}</p>
           <div className="text-[9px] text-indigo-300 font-medium">Predicted for {user.predictedTimeline || 'Oct 2027'}</div>
-        </motion.div>
+        </div>
 
       </div>
 

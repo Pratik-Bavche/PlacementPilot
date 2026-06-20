@@ -119,7 +119,7 @@ const App = () => {
 
       {/* Sidebar Navigation */}
       <aside 
-        className={`fixed inset-y-0 left-0 z-50 w-64 bg-slate-950/80 backdrop-blur-md border-r border-white/5 p-4 flex flex-col justify-between transform transition-transform duration-300 ${
+        className={`fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-slate-950/80 backdrop-blur-md border-r border-slate-200 dark:border-white/5 p-4 flex flex-col justify-between transform transition-transform duration-300 ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         } lg:relative lg:translate-x-0`}
       >
@@ -130,13 +130,13 @@ const App = () => {
               <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center font-extrabold text-white">
                 P
               </div>
-              <span className="font-extrabold tracking-tight text-white bg-gradient-to-r from-neonBlue to-royalViolet bg-clip-text text-transparent">
+              <span className="font-extrabold tracking-tight bg-gradient-to-r from-blue-600 to-violet-600 dark:from-neonBlue dark:to-royalViolet bg-clip-text text-transparent">
                 PlacementPilot
               </span>
             </div>
             
             <button 
-              className="lg:hidden text-slate-400 hover:text-white"
+              className="lg:hidden text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
               onClick={() => setSidebarOpen(false)}
             >
               <X className="w-5 h-5" />
@@ -157,11 +157,11 @@ const App = () => {
                   }}
                   className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-xs font-semibold transition-all duration-200 ${
                     isActive 
-                      ? 'bg-blue-600/10 border border-blue-500/20 text-neonBlue glow-text-blue' 
-                      : 'border border-transparent text-slate-450 hover:text-white hover:bg-slate-900/40'
+                      ? 'bg-blue-50 dark:bg-blue-600/10 border border-blue-200 dark:border-blue-500/20 text-blue-600 dark:text-neonBlue glow-text-blue' 
+                      : 'border border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900/40'
                   }`}
                 >
-                  <Icon className={`w-4 h-4 ${isActive ? 'text-neonBlue' : 'text-slate-450'}`} />
+                  <Icon className={`w-4 h-4 ${isActive ? 'text-blue-600 dark:text-neonBlue' : 'text-slate-500 dark:text-slate-400'}`} />
                   {item.label}
                 </button>
               );
@@ -170,20 +170,20 @@ const App = () => {
         </div>
 
         {/* User profile details bottom */}
-        <div className="border-t border-white/5 pt-4 space-y-3">
+        <div className="border-t border-slate-200 dark:border-white/5 pt-4 space-y-3">
           <div className="flex items-center gap-2.5 px-1">
-            <div className="w-8 h-8 rounded-full bg-slate-900 border border-white/10 flex items-center justify-center text-xs font-bold text-slate-200">
+            <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-white/10 flex items-center justify-center text-xs font-bold text-slate-700 dark:text-slate-200">
               {user.name[0]}
             </div>
             <div className="truncate">
-              <span className="text-xs font-bold text-slate-200 block truncate">{user.name}</span>
+              <span className="text-xs font-bold text-slate-900 dark:text-slate-200 block truncate">{user.name}</span>
               <span className="text-[10px] text-slate-500 capitalize">{user.role}</span>
             </div>
           </div>
 
           <button
             onClick={logout}
-            className="w-full flex items-center gap-2 px-3 py-2 bg-red-600/10 hover:bg-red-600/20 border border-red-500/20 text-red-400 rounded-lg text-xs font-bold transition-all"
+            className="w-full flex items-center gap-2 px-3 py-2 bg-red-50 dark:bg-red-600/10 hover:bg-red-100 dark:hover:bg-red-600/20 border border-red-200 dark:border-red-500/20 text-red-600 dark:text-red-400 rounded-lg text-xs font-bold transition-all"
           >
             <LogOut className="w-3.5 h-3.5" />
             Sign Out
@@ -195,15 +195,15 @@ const App = () => {
       <div className="flex-1 flex flex-col min-w-0">
         
         {/* Navbar */}
-        <header className="h-16 border-b border-white/5 bg-slate-950/40 backdrop-blur-md px-6 flex items-center justify-between relative z-40">
+        <header className="h-16 border-b border-slate-200 dark:border-white/5 bg-white/70 dark:bg-slate-950/40 backdrop-blur-md px-6 flex items-center justify-between relative z-40">
           <div className="flex items-center gap-2">
             <button
               onClick={() => setSidebarOpen(true)}
-              className="lg:hidden p-1.5 bg-slate-900 border border-white/5 rounded text-slate-400 hover:text-white"
+              className="lg:hidden p-1.5 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-white/5 rounded text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
             >
               <Menu className="w-5 h-5" />
             </button>
-            <h1 className="text-sm font-bold text-white uppercase tracking-wider hidden sm:block">
+            <h1 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider hidden sm:block">
               Workspace Platform
             </h1>
           </div>
