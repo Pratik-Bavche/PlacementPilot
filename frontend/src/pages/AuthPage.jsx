@@ -128,8 +128,6 @@ const AuthPage = () => {
           <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">AI-Powered Placement Readiness & Mentorship</p>
         </div>
 
-        </div>
-
         <AnimatePresence mode="wait">
           {error && (
             <motion.div 
