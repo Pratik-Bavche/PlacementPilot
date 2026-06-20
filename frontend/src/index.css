@@ -4,10 +4,17 @@
 
 @layer base {
   body {
-    @apply bg-slate-50 text-slate-900 font-sans antialiased selection:bg-neonBlue/30 selection:text-neonBlue overflow-x-hidden transition-colors duration-300;
+    @apply bg-slate-50 text-slate-900 font-sans antialiased selection:bg-neonBlue/30 selection:text-neonBlue overflow-x-hidden;
   }
   .dark body {
     @apply bg-darkBg text-slate-100;
+  }
+
+  /* Smooth Theme Transitions */
+  * {
+    transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+                border-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+                color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 

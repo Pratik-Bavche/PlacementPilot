@@ -12,7 +12,6 @@ import GithubReviewPage from './pages/GithubReviewPage';
 import PlacementTwinPage from './pages/PlacementTwinPage';
 import ApplicationTrackerPage from './pages/ApplicationTrackerPage';
 import HubAndArenaPage from './pages/HubAndArenaPage';
-import AdminPage from './pages/AdminPage';
 
 import { 
   LayoutDashboard, FileText, Briefcase, Calendar, MessageSquare, 
@@ -76,11 +75,6 @@ const App = () => {
     { id: 'hub', label: 'Battle Arena & Hub', icon: Share2 }
   ];
 
-  // Insert Admin options if account has privilege
-  if (user.role === 'admin') {
-    menuItems.push({ id: 'admin', label: 'Admin Panel', icon: Shield });
-  }
-
   const renderActiveTab = () => {
     switch (tab) {
       case 'dashboard':
@@ -103,8 +97,6 @@ const App = () => {
         return <ApplicationTrackerPage token={token} API_BASE={API_BASE} />;
       case 'hub':
         return <HubAndArenaPage user={user} token={token} API_BASE={API_BASE} />;
-      case 'admin':
-        return <AdminPage token={token} API_BASE={API_BASE} />;
       default:
         return <DashboardPage user={user} token={token} API_BASE={API_BASE} setTab={setTab} />;
     }

@@ -9,7 +9,7 @@ const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [isForgotPassword, setIsForgotPassword] = useState(false);
   const [resetStep, setResetStep] = useState(1);
-  const [role, setRole] = useState('student'); // 'student' or 'admin'
+  const role = 'student';
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -93,8 +93,8 @@ const AuthPage = () => {
     setError('');
     setLoading(true);
     try {
-      const mockName = role === 'admin' ? 'Google Admin' : 'John Doe';
-      const mockEmail = role === 'admin' ? 'admin@placementpilot.ai' : 'johndoe@gmail.com';
+      const mockName = 'John Doe';
+      const mockEmail = 'johndoe@gmail.com';
       const mockId = 'google_oauth_secret_12345';
       await loginGoogle(mockName, mockEmail, mockId);
     } catch (err) {
@@ -105,7 +105,7 @@ const AuthPage = () => {
   };
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center bg-darkBg px-4 overflow-hidden">
+    <div className="relative min-h-screen flex items-center justify-center bg-slate-50 dark:bg-darkBg px-4 overflow-hidden">
       {/* Background neon glows */}
       <div className="absolute top-1/4 left-1/4 w-80 h-80 rounded-full bg-neonBlue/10 blur-[120px] pulse-glow-bg"></div>
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-royalViolet/10 blur-[150px] pulse-glow-bg"></div>
@@ -128,30 +128,6 @@ const AuthPage = () => {
           <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">AI-Powered Placement Readiness & Mentorship</p>
         </div>
 
-        {/* Toggle Role */}
-        <div className="flex bg-slate-100/80 dark:bg-slate-900/60 p-1 rounded-lg mb-6 border border-slate-200 dark:border-white/5">
-          <button
-            type="button"
-            className={`flex-1 py-1.5 text-xs font-semibold rounded-md transition-all duration-300 ${
-              role === 'student'
-                ? 'bg-blue-600 text-white shadow-md'
-                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-            }`}
-            onClick={() => setRole('student')}
-          >
-            Student Gateway
-          </button>
-          <button
-            type="button"
-            className={`flex-1 py-1.5 text-xs font-semibold rounded-md transition-all duration-300 ${
-              role === 'admin'
-                ? 'bg-violet-600 text-white shadow-md'
-                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-            }`}
-            onClick={() => setRole('admin')}
-          >
-            Admin Panel
-          </button>
         </div>
 
         <AnimatePresence mode="wait">
@@ -173,7 +149,7 @@ const AuthPage = () => {
               <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">Full Name</label>
               <input
                 type="text"
-                className="w-full bg-slate-200/50 dark:bg-slate-950/60 border border-slate-300 dark:border-white/10 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none focus:border-neonBlue transition-colors"
+                className="w-full bg-white dark:bg-slate-950/60 border border-slate-300 dark:border-white/10 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-neonBlue transition-colors"
                 placeholder="Pratik Patil"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -187,8 +163,8 @@ const AuthPage = () => {
               <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">Email Address</label>
               <input
                 type="email"
-                className="w-full bg-slate-200/50 dark:bg-slate-950/60 border border-slate-300 dark:border-white/10 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none focus:border-neonBlue transition-colors"
-                placeholder={role === 'admin' ? 'admin@placementpilot.ai' : 'student@college.edu'}
+                className="w-full bg-white dark:bg-slate-950/60 border border-slate-300 dark:border-white/10 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-neonBlue transition-colors"
+                placeholder="student@college.edu"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -214,7 +190,7 @@ const AuthPage = () => {
               </div>
               <input
                 type="password"
-                className="w-full bg-slate-200/50 dark:bg-slate-950/60 border border-slate-300 dark:border-white/10 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none focus:border-neonBlue transition-colors"
+                className="w-full bg-white dark:bg-slate-950/60 border border-slate-300 dark:border-white/10 rounded-lg px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-neonBlue transition-colors"
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -226,11 +202,7 @@ const AuthPage = () => {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-3 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 text-slate-900 dark:text-white shadow-lg transition-all duration-300 ${
-              role === 'admin' 
-                ? 'bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 shadow-violet-500/10'
-                : 'bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 shadow-blue-500/10'
-            }`}
+            className="w-full py-3 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 text-white shadow-lg transition-all duration-300 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 shadow-blue-500/10"
           >
             {loading ? (
               <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
