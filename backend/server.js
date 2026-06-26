@@ -68,9 +68,14 @@ const startServer = async () => {
     console.error('Error seeding admin user', err);
   }
 
-  app.listen(PORT, () => {
-    console.log(`>>> Express Server running on port ${PORT}`);
-  });
+  // Only listen if not running on Vercel
+  if (!process.env.VERCEL) {
+    app.listen(PORT, () => {
+      console.log(`>>> Express Server running on port ${PORT}`);
+    });
+  }
 };
 
 startServer();
+
+export default app;
